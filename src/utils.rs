@@ -1,44 +1,45 @@
 // Utilities
-use std::fmt::Display;
-use chrono::Local;
+// use std::fmt::Display;
 
-// A simple logging function
-pub fn debug<T: Display> (info: T) {
-    _logger("DEBUG", info);
-}
+// use chrono::Local;
 
-pub fn info<T: Display> (info: T) {
-    _logger("INFO", info);
-}
+// // A simple logging function
+// pub fn debug<T: Display> (info: T) {
+//     _logger("DEBUG", info);
+// }
 
-pub fn warn<T: Display> (info: T) {
-    _logger("WARN", info);
-}
+// pub fn info<T: Display> (info: T) {
+//     _logger("INFO", info);
+// }
 
-pub fn error<T: Display> (info: T) {
-    _logger("ERROR", info);
-    panic! ("Error occured!");
-}
+// pub fn warn<T: Display> (info: T) {
+//     _logger("WARN", info);
+// }
 
-fn _logger<T: Display> (level: &str, info: T) {
-    let date = Local::now();
-    eprintln!("[{}] |{:5}| - {}", date.format("%a %Y-%m-%d %H:%M:%S"), level, info);
-}
+// pub fn error<T: Display> (info: T) {
+//     _logger("ERROR", info);
+//     panic! ("Error occured!");
+// }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+// fn _logger<T: Display> (level: &str, info: T) {
+//     let date = Local::now();
+//     eprintln!("[{}] |{:5}| - {}", date.format("%a %Y-%m-%d %H:%M:%S"), level, info);
+// }
 
-    #[test]
-    fn test_logger() {
-        debug(String::from("Debugging"));
-        info("Information");
-        warn("Warning");
-    }
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
 
-    #[test]
-    #[should_panic]
-    fn test_error() {
-        error("Test error");
-    }
-}
+//     #[test]
+//     fn test_logger() {
+//         debug(String::from("Debugging"));
+//         info("Information");
+//         warn("Warning");
+//     }
+
+//     #[test]
+//     #[should_panic]
+//     fn test_error() {
+//         error("Test error");
+//     }
+// }
