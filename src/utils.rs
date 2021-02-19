@@ -1,3 +1,7 @@
+// Utilities
+use std::fmt::Display;
+use chrono::Local;
+
 // A simple logging function
 pub fn debug<T: Display> (info: T) {
     _logger("DEBUG", info);
@@ -20,7 +24,6 @@ fn _logger<T: Display> (level: &str, info: T) {
     let date = Local::now();
     eprintln!("[{}] |{:5}| - {}", date.format("%a %Y-%m-%d %H:%M:%S"), level, info);
 }
-
 
 #[cfg(test)]
 mod tests {
