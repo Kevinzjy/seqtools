@@ -22,26 +22,26 @@ pub fn filter_by_ids(
     let mut n_ids = 0;
     let min_len = flag_m.parse::<usize>().expect("Invalid -m paramter");
     let max_len = flag_x.parse::<usize>().expect("Invalid -x paramter");
-    let mut is_neg = *flag_n;
+    let is_neg = *flag_n;
 
-    let id = Path::new(id_list);
-    if id.is_file() {
-        let id_file = File::open(id).expect("Failed to open id file");
-        for line in BufReader::new(id_file).lines() {
-            seq_map.insert(line.expect("Wrong line"), 1);
-            n_ids += 1;
-        }
-        match is_neg {
-            true => eprintln!("Dropping {} sequence ids", n_ids),
-            false => eprintln!("Keeping {} sequence ids", n_ids)
+    if id_list != "" {
+        let id = Path::new(id_list);
+        if id.is_file() {
+            let id_file = File::open(id).expect("Failed to open id file");
+            for line in BufReader::new(id_file).lines() {
+                seq_map.insert(line.expect("Wrong line"), 1);
+                n_ids += 1;
+            }
+            match is_neg {
+                true => eprintln!("Dropping {} sequence ids", n_ids),
+                false => eprintln!("Keeping {} sequence ids", n_ids)
+            }
+        } else {
+            eprintln! ("{} does not exist or is a directory.", id_list);
+            exit(1);
         }
     } else {
-        if id_list != "" {
-            eprintln! ("{} does not exist or is a directory.", id_list);
-        } else {
-            println!("No id file specified, filtering reads length");
-            is_neg = false;
-        }
+        println!("No id file specified, filtering reads length");
     }
     
     // Load input sequences
@@ -65,7 +65,7 @@ pub fn filter_by_ids(
                None => continue
             }
         }
-        if is_filter ^ !is_neg {
+        if id_list != "" && (is_filter ^ !is_neg) {
             continue;
         }
 
