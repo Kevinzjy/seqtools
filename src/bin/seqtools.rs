@@ -23,9 +23,9 @@ Options:
   --version     Show version
 
 Options(Filter):
-  -l FILE       ID list file (ID\nID)
-  -x INT        Maximum sequence length to output (default: no filter)
-  -m INT        Minimum sequence length to output (default: no filter)
+  -l FILE       ID list file (one ID per line)
+  -x INT        Maximum sequence length to output [default: 0]
+  -m INT        Minimum sequence length to output [default: 0]
   -n            Set for negative filtering instead of positive
 
 Options(polya scanning):
@@ -68,6 +68,7 @@ fn main() -> Result<(), Error> {
     }
 
     if args.cmd_count {
+        println!("FileName,Reads,Bases,N01,N10,N50,N90,N99");
         for fname in args.arg_reads.iter() {
             let _ = count::fast_count(fname);
         }
