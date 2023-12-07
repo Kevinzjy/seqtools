@@ -2,7 +2,7 @@ use docopt::Docopt;
 use serde::Deserialize;
 use failure::Error;
 
-use seqtools::{count, filter, scan};
+use seqtools::{count, index, filter, scan};
 
 const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -11,6 +11,7 @@ Seqtools (Tools for manipulate fasta/fastq files)
 
 Usage:
   seqtools count <reads>...
+  seqtools index <reads>...
   seqtools filter [options] -i FASTX -o FASTX
   seqtools polya [options] -i FASTX -o TXT
   seqtools (-h | --help)
@@ -38,6 +39,8 @@ Options(polya scanning):
 struct Args {
     // fast_count
     cmd_count: bool,
+    // fast_index
+    cmd_index: bool,
     arg_reads: Vec<String>,
     // seqfilter
     cmd_filter: bool,
@@ -71,6 +74,13 @@ fn main() -> Result<(), Error> {
         println!("FileName,Reads,Bases,N01,N10,N50,N90,N99");
         for fname in args.arg_reads.iter() {
             let _ = count::fast_count(fname);
+        }
+        return Ok(());
+    }
+
+    if args.cmd_index {
+        for fname in args.arg_reads.iter() {
+            let _ = index::fast_index(fname);
         }
         return Ok(());
     }

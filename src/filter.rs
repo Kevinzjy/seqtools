@@ -43,7 +43,7 @@ pub fn filter_by_ids(
     } else {
         println!("No id file specified, filtering reads length");
     }
-    
+
     // Load input sequences
     let fastx = Path::new(infile);
     if !fastx.is_file() {
